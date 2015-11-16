@@ -2,25 +2,51 @@
 #define TSP_SOLVER_H
 
 #include <algorithm>
-#include <cstdio>
+#include <cmath>
 #include <cstdlib>
 #include <limits>
 #include <queue>
 #include <vector>
 
+#define NOT_VISITED (-1)
+
 using lint = long;
 using ldouble = double;
+
+struct search_state {
+    search_state(std::vector<lint> &nvisit_order, lint ncurrent,
+        ldouble ncost, lint nexp_cost) :
+        visit_order(nvisit_order),
+        current(ncurrent),
+        cost(ncost),
+        exp_cost(nexp_cost)
+        {}
+
+    search_state(const search_state & a) :
+        visit_order(a.visit_order),
+        current(a.current),
+        cost(a.cost),
+        exp_cost(a.exp_cost)
+        {}
+
+    search_state() {}
+
+    std::vector<lint> visit_order;
+    lint current;
+    ldouble cost, exp_cost;
+};
 
 class tsp_solver {
     ldouble current_best;
     std::vector< std::pair<lint, lint> > points;
+    std::vector<lint> best_order;
     lint n;
 public:
     tsp_solver(const std::vector< std::pair<lint, lint> > &npoints);
     
-    std::vector< std::pair<lint, lint> > solve(); 
-    ldouble cost() const;
-    ldouble heuristics() const;
+    std::vector<lint> solve(); 
+    ldouble cost(lint, lint) const;
+    virtual ldouble heuristics(lint next) const;
 };
 
 

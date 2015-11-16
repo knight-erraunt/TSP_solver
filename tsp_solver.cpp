@@ -1,27 +1,62 @@
 #include "tsp_solver.h"
 
+
+bool operator<(const search_state & a, const search_state & b) {
+    return a.exp_cost > b.exp_cost;
+}
+
 tsp_solver::tsp_solver(const std::vector< std::pair<lint, lint> > &npoints) :
         n(npoints.size()),
         points(npoints),
         current_best(std::numeric_limits<ldouble>::max())
         {}
 
-std::vector< std::pair<lint, lint> > tsp_solver::solve() {
-    std::priority_queue< std::pair<ldouble, std::vector< bool > > > for_search;
-    std::vector< bool > visited(n, false);
-    visited[0] = true;
-    for_search.push(make_pair(0, visited));
+std::vector<lint> tsp_solver::solve() {
+    std::priority_queue< search_state > for_search;
+    std::vector<lint> visited(n, NOT_VISITED);
+    visited[0] = 0;
+    for_search.push( search_state(visited, 0, 0, 0) );
     while(!for_search.empty()) {
+        search_state A = for_search.top(), B;
+        for_search.pop();
+        if(std::all_of(A.visit_order.begin(), A.visit_order.end(),
+                    [](lint a){return a != NOT_VISITED;})) {
+            if(current_best > A.cost) {
+                current_best = A.cost;
+                best_order = A.visit_order;
+            }
+            continue;
+        }
+        for(int i=1; i<A.visit_order.size(); i++)
+            if(A.visit_order[i] == NOT_VISITED) {
+                ldouble expected_cost = A.cost + cost(A.current, i) + heuristics(i);
+                if(expected_cost < current_best) {
+                    B = A;
+                    B.visit_order[i] = A.visit_order[A.current] + 1;
+                    B.current = i;
+                    B.cost = A.cost + cost(A.current, i);
+                    B.exp_cost = expected_cost;
+                    for_search.push(B);
+                }
+            }
+
     }
+    return best_order;
 }
 
-ldouble tsp_solver::cost() const {
+ldouble dist(std::pair<lint, lint> a, std::pair<lint, lint> b) {
+    return sqrtl((a.first-b.first)*(a.first-b.first) + 
+            (a.second-b.second)*(a.second-b.second));
+}
+
+ldouble tsp_solver::cost(lint curret_node, lint next_node) const {
+    return dist(points[curret_node], points[next_node]);
+}
+
+ldouble tsp_solver::heuristics(lint next) const {
     return 0;
 }
 
-ldouble tsp_solver::heuristics() const {
-    return 0;
-}
 
 
 
