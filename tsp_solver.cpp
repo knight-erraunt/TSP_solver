@@ -21,8 +21,8 @@ std::vector<lint> tsp_solver::solve() {
         for_search.pop();
         if(std::all_of(A.visit_order.begin(), A.visit_order.end(),
                     [](lint a){return a != NOT_VISITED;})) {
-            if(current_best > A.cost) {
-                current_best = A.cost;
+            if(current_best > A.cost + cost(0, A.current)) {
+                current_best = A.cost + cost(0, A.current);
                 best_order = A.visit_order;
             }
             continue;
