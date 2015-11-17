@@ -53,10 +53,6 @@ ldouble tsp_solver::cost(lint curret_node, lint next_node) const {
     return dist(points[curret_node], points[next_node]);
 }
 
-ldouble tsp_solver::heuristics(lint next) const {
-    return 0;
-}
-
 ldouble tsp_solver::path_len() const {
     return current_best;
 }
