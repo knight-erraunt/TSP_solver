@@ -8,8 +8,6 @@
 #include <queue>
 #include <vector>
 
-#include <cstdio>
-
 #define NOT_VISITED (-1)
 
 using lint = long;
