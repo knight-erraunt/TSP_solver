@@ -13,7 +13,9 @@ bool operator<(const edge & a, const edge & b) {
     return a.cost > b.cost;
 }
 
-// returns pairs representing indexes of the matched points
+// Algorithm for finding MST on a plane uses Prim's algorithm
+// to find the MST returns pairs representing indexes of the matched points
+// complexity: O(n^2 * log(n))
 std::vector< std::pair<lint, lint> > naive_euclidean_mst(
         const std::vector< std::pair<lint, lint> > & points) {
 

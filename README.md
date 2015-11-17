@@ -52,5 +52,9 @@ for help:
 
     visualize -h
 
+Time comparison:
+    
+    time_cmp amount_of_test_cases test_cases_size
+
 
 
