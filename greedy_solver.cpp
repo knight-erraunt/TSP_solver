@@ -19,6 +19,7 @@ int main() {
         scanf("%ld %ld", &points[i].first, &points[i].second);
     greedy_tsp_solver A(points);
     std::vector<lint> order = A.solve();
+    printf("%lf\n", A.path_len());
     for(int i=0; i<order.size(); i++)
         printf("%ld ", order[i]);
     printf("\n");

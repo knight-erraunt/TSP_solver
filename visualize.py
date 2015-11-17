@@ -3,6 +3,7 @@
 import argparse
 import sys
 import tkinter as tk
+import math
 
 SCALE = 20
 POINT_SIZE = 3 # a square consisting of 4 squares of size
@@ -18,14 +19,24 @@ canvas = None
 
 #canvas.create_line(0, 0, 200, 100)
 
+def dist(p1, p2):
+    return math.sqrt((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] -
+        p2[1])*(p1[1] - p2[1]))
+
 def draw_points(canvas, points):
     for x, y in points:
         canvas.create_rectangle(x * SCALE - POINT_SIZE, y * SCALE - POINT_SIZE,
                                 x * SCALE + POINT_SIZE, y * SCALE + POINT_SIZE,
                                 fill = 'blue')
 def draw_lines(canvas, order):
+    """
+    Draw lines and count their lenght
+    """
+    result = 0
     prev = points[order[0]]
     for node in [points[i] for i in order[1:]]:
+
+        result += dist(prev, node)
         canvas.create_line(prev[0] * SCALE, prev[1] * SCALE,
                            node[0] * SCALE, node[1] * SCALE,
                            fill = 'red')
@@ -34,6 +45,10 @@ def draw_lines(canvas, order):
     canvas.create_line(points[order[-1]][0] * SCALE, points[order[-1]][1] * SCALE,
                        points[order[0]][0] * SCALE, points[order[0]][1] * SCALE,
                        fill = 'red')
+
+    result += dist(points[order[-1]], points[order[0]])
+
+    return result
 
 
 
@@ -59,7 +74,13 @@ if __name__ == '__main__':
 
     path_file = open(args.p, 'r')
 
-    order = list(map(int, path_file.readline().split()))
+    cost = float(path_file.readline().strip())
+    vertex_visit_time = list(map(int, path_file.readline().split()))
+
+    order = list(range(n))
+
+    for i in range(n):
+        order[vertex_visit_time[i]] = i
 
     if len(order) != n:
         print("The path is not of the length of all the points")
@@ -69,7 +90,11 @@ if __name__ == '__main__':
     canvas.pack()
 
     draw_points(canvas, points)
-    draw_lines(canvas, order)
+    lines_len = draw_lines(canvas, order)
+    
+    if abs(lines_len - cost) > 0.1:
+        print("The length of the path output by program does not match \
+                it's output cost")
     
     tk.mainloop()
 

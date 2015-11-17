@@ -8,13 +8,15 @@
 #include <queue>
 #include <vector>
 
+#include <cstdio>
+
 #define NOT_VISITED (-1)
 
 using lint = long;
 using ldouble = double;
 
 struct search_state {
-    search_state(std::vector<lint> &nvisit_order, lint ncurrent,
+    search_state(const std::vector<lint> & nvisit_order, lint ncurrent,
         ldouble ncost, lint nexp_cost) :
         visit_order(nvisit_order),
         current(ncurrent),
@@ -45,6 +47,7 @@ public:
     tsp_solver(const std::vector< std::pair<lint, lint> > &npoints);
     
     std::vector<lint> solve(); 
+    ldouble path_len() const;
     ldouble cost(lint, lint) const;
     virtual ldouble heuristics(lint next) const;
 };
