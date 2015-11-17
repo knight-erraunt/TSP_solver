@@ -30,7 +30,7 @@ std::vector<lint> tsp_solver::solve() {
         }
         for(lint i=1; i<A.visit_order.size(); i++)
             if(A.visit_order[i] == NOT_VISITED) {
-                ldouble expected_cost = A.cost + cost(A.current, i) + heuristics(i);
+                ldouble expected_cost = A.cost + cost(A.current, i) + heuristics(points, A, i);
                 if(expected_cost < current_best) {
                     B = A;
                     B.visit_order[i] = A.visit_order[A.current] + 1;
@@ -43,11 +43,6 @@ std::vector<lint> tsp_solver::solve() {
 
     }
     return best_order;
-}
-
-ldouble dist(std::pair<lint, lint> a, std::pair<lint, lint> b) {
-    return sqrt((a.first-b.first)*(a.first-b.first) + 
-            (a.second-b.second)*(a.second-b.second));
 }
 
 ldouble tsp_solver::cost(lint curret_node, lint next_node) const {

@@ -8,10 +8,10 @@
 #include <queue>
 #include <vector>
 
+#include "euclidean.h"
+
 #define NOT_VISITED (-1)
 
-using lint = long;
-using ldouble = double;
 
 struct search_state {
     search_state(const std::vector<lint> & nvisit_order, lint ncurrent,
@@ -47,7 +47,9 @@ public:
     std::vector<lint> solve(); 
     ldouble path_len() const;
     ldouble cost(lint, lint) const;
-    virtual ldouble heuristics(lint next) const;
+    virtual ldouble heuristics(
+            const std::vector< std::pair<lint, lint> > & points,
+            const search_state & current, const lint next) const = 0;
 };
 
 

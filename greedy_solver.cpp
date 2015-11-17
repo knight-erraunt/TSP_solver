@@ -1,13 +1,18 @@
 #include <cstdio>
+
 #include "tsp_solver.h"
 
 class greedy_tsp_solver : public tsp_solver {
 public:
     using tsp_solver::tsp_solver;
-    ldouble heuristics(lint next) const;
+    ldouble heuristics(
+            const std::vector< std::pair<lint, lint> > & points,
+            const search_state &current, const lint next) const;
 };
 
-ldouble greedy_tsp_solver::heuristics(lint next) const {
+ldouble greedy_tsp_solver::heuristics(
+        const std::vector< std::pair<lint, lint> > & points,
+        const search_state & current, const lint next) const {
     return 0;
 }
 
