@@ -32,6 +32,7 @@ To generate random graph :
     gen_graph.py > output_file
 
 for help:
+
     gen_graph.py -h 
 
 
@@ -45,6 +46,7 @@ Visualize the output path:
     visualize -g graph_file -p tsp_path_file
 
 for help:
+
     visualize -h
 
 
