@@ -1,6 +1,7 @@
 #include "tsp_solver.h"
 
 
+// inversed comparison operator as we want the cheapest to be first
 bool operator<(const search_state & a, const search_state & b) {
     return a.exp_cost > b.exp_cost;
 }
