@@ -36,11 +36,14 @@ for help:
     gen_graph.py -h 
 
 
-Test w greedy algorithm :
+Test greedy algorithm :
 
-    greedy < in_file > output_file
+    greedy_solver < in_file > output_file
 
+Test mst heuristic algorithm :
 
+    mst_solver < in_file > output_file 
+    
 Visualize the output path:
 
     visualize -g graph_file -p tsp_path_file
