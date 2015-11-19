@@ -11,11 +11,12 @@ if [ ! -e greedy_solver ] || [ ! -e mst_solver ]; then
 fi
 
 for i in `seq 0 $(($1 - 1))`; do
-    echo "Generating test"
+    echo "Generating test $i"
     ./gen_graph.py -n $2 > ./test_cases/test_case_$i
     echo "Running greedy algorithm"
     time ./greedy_solver < ./test_cases/test_case_$i \
         > ./test_results/greedy_result_$i
+    echo
     echo "Running mst heuristic algorithm"
     time ./mst_solver < ./test_cases/test_case_$i \
         > ./test_results/mst_heuristic_result_$i
@@ -27,5 +28,6 @@ for i in `seq 0 $(($1 - 1))`; do
         echo "The results do not match on test $i"
         exit 1
     fi
+    echo -e "\n\n"
 done
 

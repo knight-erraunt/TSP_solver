@@ -1,8 +1,7 @@
 #include "euclidean.h"
 
-ldouble dist(std::pair<lint, lint> a, std::pair<lint, lint> b) {
+ldouble dist(const point & a, const point & b) {
     return sqrt((a.first-b.first)*(a.first-b.first) + 
             (a.second-b.second)*(a.second-b.second));
 }
-
 

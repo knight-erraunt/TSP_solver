@@ -38,18 +38,19 @@ struct search_state {
 
 class tsp_solver {
     ldouble current_best;
-    std::vector< std::pair<lint, lint> > points;
+    point_vector points;
     std::vector<lint> best_order;
     lint n;
 public:
-    tsp_solver(const std::vector< std::pair<lint, lint> > &npoints);
+    tsp_solver(const point_vector & npoints);
     
     std::vector<lint> solve(); 
     ldouble path_len() const;
     ldouble cost(lint, lint) const;
     virtual ldouble heuristics(
-            const std::vector< std::pair<lint, lint> > & points,
-            const search_state & current, const lint next) const = 0;
+            const point_vector & points,
+            const search_state & current,
+            const lint next) const = 0;
 };
 
 

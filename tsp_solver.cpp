@@ -6,12 +6,16 @@ bool operator<(const search_state & a, const search_state & b) {
     return a.exp_cost > b.exp_cost;
 }
 
-tsp_solver::tsp_solver(const std::vector< std::pair<lint, lint> > &npoints) :
+tsp_solver::tsp_solver(const point_vector & npoints) :
         n(npoints.size()),
         points(npoints),
         current_best(std::numeric_limits<ldouble>::max())
         {}
 
+/*
+ * returns a vector of numbers representing 
+ * which should each point be in the cycle
+ */
 std::vector<lint> tsp_solver::solve() {
     std::priority_queue< search_state > for_search;
     std::vector<lint> visited(n, NOT_VISITED);

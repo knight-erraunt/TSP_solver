@@ -7,17 +7,18 @@ class mst_tsp_solver : public tsp_solver {
 public:
     using tsp_solver::tsp_solver;
     ldouble heuristics(
-            const std::vector< std::pair<lint, lint> > & points,
+            const point_vector & points,
             const search_state & current, const lint next) const;    
 };
 
 ldouble mst_tsp_solver::heuristics(
-        const std::vector< std::pair<lint, lint> > & points,
+        const point_vector & points,
         const search_state & current, const lint next) const {
-    std::vector< std::pair<lint, lint> > for_mst;
 
-    ldouble min_mst_to_next_dist = std::numeric_limits<ldouble>::max(),
-            min_mst_to_first_dist = std::numeric_limits<ldouble>::max(),
+    point_vector for_mst;
+
+    ldouble min_mst_to_next_dist = big_ldouble,
+            min_mst_to_first_dist = big_ldouble,
             mst_cost = 0;
 
     for(lint i = 0; i < current.visit_order.size(); i++)
@@ -45,7 +46,7 @@ ldouble mst_tsp_solver::heuristics(
 int main() {
     lint n;
     scanf("%ld", &n);
-    std::vector< std::pair<lint, lint> > points(n);
+    point_vector points(n);
     for(int i=0; i<n; i++)
         scanf("%ld %ld", &points[i].first, &points[i].second);
     mst_tsp_solver A(points);
